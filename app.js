@@ -63,6 +63,15 @@ app.get('/getall', (req, res) => {
     });
 });
 
+app.get('/getdatastaff', (req, res) => {
+    let sql = 'SELECT * FROM staff';
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+      //  console.log(result);
+        res.send(result);
+    });
+});
+
 app.get('/getunit', (req, res) => {
     let sql = 'SELECT * FROM test4';
     db.query(sql, (err, result) => {
