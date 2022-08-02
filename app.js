@@ -8,9 +8,9 @@ const now = new Date();
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'semangat',
-    database: 'test',
-    port:3308
+    password: '',
+    database: 'tes',
+    port:3309
 });
 
 db.connect((err) => {
@@ -99,6 +99,12 @@ app.get('/getsupp', (req, res) => {
     });
 });
 
+app.use('/login', (req, res) => {
+  res.send({
+    token: 'test123'
+  });
+});
+
 app.get('/Edit/:id', (req, res) => {
 	const id = req.params.id;
     let sql = 'SELECT * FROM OrderDetails WHERE id = ?';
@@ -108,6 +114,48 @@ app.get('/Edit/:id', (req, res) => {
     db.query(sql,id, (err, result) => {
         if (err) throw err;
         console.log(result);
+        res.send(result);
+    });
+});
+
+app.get('/editstaff/:id', (req, res) => {
+	const id = req.params.id;
+    let sql = 'SELECT * FROM staff WHERE staff_id = ?';
+	
+
+	
+    db.query(sql,id, (err, result) => {
+        if (err) throw err;
+       // console.log(result);
+        res.send(result);
+    });
+});
+
+app.delete('/DELstaffdata/:id', (req, res) => {
+	const id = req.params.id;
+    let sql = 'delete FROM staff WHERE staff_id = ?';
+	
+
+	
+    db.query(sql,id, (err, result) => {
+        if (err) throw err;
+       // console.log(result);
+        res.send(result);
+    });
+});
+
+app.put('/editstaffdata', (req, res) => {
+	const id = req.body.id;
+	const Newnama = req.body.nama;
+	const alamat = req.body.addres;
+	const telp = req.body.tlp;
+	const user=req.body.user;
+	const passwor=req.body.pass;
+    let sql = 'update staff set name=?,address=?,telp=?,username=?,password=? WHERE staff_id = ?';
+	 //console.log(id);
+    db.query(sql,[Newnama,alamat,telp,user,passwor,id], (err, result) => {
+        if (err) throw err;
+      
         res.send(result);
     });
 });
